@@ -196,4 +196,4 @@ SUPABASE_IMAGES_BUCKET = os.getenv('SUPABASE_IMAGES_BUCKET', 'images')
 SUPABASE_DWGS_BUCKET = os.getenv('SUPABASE_DWGS_BUCKET', 'dwgs')
 
 # Whitenoise
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
