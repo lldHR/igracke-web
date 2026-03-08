@@ -195,9 +195,5 @@ SUPABASE_URL = os.getenv('SUPABASE_URL')
 SUPABASE_IMAGES_BUCKET = os.getenv('SUPABASE_IMAGES_BUCKET', 'images')
 SUPABASE_DWGS_BUCKET = os.getenv('SUPABASE_DWGS_BUCKET', 'dwgs')
 
-# Whitenoise static file storage
-STORAGES = {
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
-    },
-}
+# Whitenoise — serve static files in production
+WHITENOISE_USE_FINDERS = True
