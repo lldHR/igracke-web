@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-apo0qvh_+2e5sdwub7u4)ickzaz7mg*stq_j2lc(we4j*lz60k'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG is set from environment variable below (after load_dotenv)
 
 # Application definition
 INSTALLED_APPS = [
@@ -57,7 +57,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.cache.FetchFromCacheMiddleware',
+    # 'django.middleware.cache.FetchFromCacheMiddleware',
 ]
 
 ROOT_URLCONF = 'igracke.urls'
@@ -195,5 +195,9 @@ SUPABASE_URL = os.getenv('SUPABASE_URL')
 SUPABASE_IMAGES_BUCKET = os.getenv('SUPABASE_IMAGES_BUCKET', 'images')
 SUPABASE_DWGS_BUCKET = os.getenv('SUPABASE_DWGS_BUCKET', 'dwgs')
 
-# Whitenoise
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+# Whitenoise static file storage
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+    },
+}
