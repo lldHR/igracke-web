@@ -15,7 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include, re_path
+from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
@@ -36,11 +36,7 @@ urlpatterns = [
     path('robots.txt', TemplateView.as_view(template_name="catalog/robots.txt", content_type="text/plain")),
 ]
 
-# Always serve static files (Whitenoise not serving on Railway)
-from django.views.static import serve
-import re
-urlpatterns += [
-    re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),
-]
+# Serve static and media files during development
 if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

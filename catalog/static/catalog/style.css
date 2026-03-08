@@ -1,0 +1,409 @@
+/* Glass UI Design System */
+
+:root {
+    /* Colors */
+    --primary-color: #2563eb;
+    --primary-dark: #1e40af;
+    --primary-light: #60a5fa;
+    --accent-color: #f59e0b;
+    --text-dark: #1f2937;
+    --text-muted: #6b7280;
+    --light-bg: #f8fafc;
+    --success-color: #10b981;
+    --warning-color: #f59e0b;
+    --danger-color: #ef4444;
+    --border-color: #e5e7eb;
+
+    /* Glass Effect Variables */
+    --glass-bg: rgba(255, 255, 255, 0.4);
+    --glass-border: rgba(255, 255, 255, 0.6);
+    --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+    --glass-blur: blur(16px);
+
+    /* Standard Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+    /* Transitions */
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    color: var(--text-dark);
+    background-color: var(--light-bg);
+    line-height: 1.6;
+}
+
+/* Glass Components */
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: 1rem;
+    box-shadow: var(--glass-shadow);
+    transition: box-shadow var(--transition-normal);
+    overflow: hidden;
+}
+
+.glass-card:hover {
+    box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.15);
+}
+
+.glass-header {
+    background: rgba(255, 255, 255, 0.85) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Navbar */
+.navbar {
+    padding: 1rem 0;
+    transition: var(--transition-normal);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.navbar.scrolled {
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: var(--shadow-md);
+}
+
+.nav-link {
+    font-weight: 500;
+    color: var(--text-dark) !important;
+    padding: 0.5rem 1rem !important;
+    border-radius: 0.5rem;
+    transition: var(--transition-fast);
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: var(--primary-color) !important;
+    background: rgba(37, 99, 235, 0.1);
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: var(--primary-color) !important;
+}
+
+/* Hero Section */
+.hero-section {
+    background: var(--primary-color);
+    color: white;
+    padding: 120px 0 80px;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="rgba(255,255,255,0.1)"><polygon points="0,100 1000,0 1000,100"/></svg>');
+    background-size: cover;
+    pointer-events: none;
+}
+
+/* Base Buttons */
+.btn {
+    border-radius: 0.75rem;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    transition: background-color var(--transition-fast), color var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+    position: relative;
+    overflow: hidden;
+}
+
+/* PRIMARY: solid blue → darker blue on hover */
+.btn-primary {
+    background: var(--primary-color);
+    border: none;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: rgba(37, 99, 235, 0.85);
+    color: white;
+}
+
+/* LIGHT: white bg → blueish tint on hover (nav-link style) */
+.btn-light {
+    background: white !important;
+    border: 1px solid var(--border-color);
+    color: var(--text-dark) !important;
+}
+
+.btn-light:hover {
+    color: var(--primary-color) !important;
+    background: rgba(37, 99, 235, 0.1) !important;
+    border-color: rgba(37, 99, 235, 0.2);
+}
+
+/* LIGHT on dark backgrounds: keep white, subtle opacity shift */
+.hero-section .btn-light,
+.bg-gradient-primary .btn-light {
+    border-color: transparent;
+}
+
+.hero-section .btn-light:hover,
+.bg-gradient-primary .btn-light:hover {
+    background: rgba(255, 255, 255, 0.85) !important;
+    color: var(--primary-color) !important;
+    border-color: transparent;
+}
+
+/* OUTLINE-PRIMARY: border blue → filled blueish on hover */
+.btn-outline-primary {
+    background: transparent;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+}
+
+.btn-outline-primary:hover {
+    color: var(--primary-color);
+    background: rgba(37, 99, 235, 0.1);
+    border-color: var(--primary-color);
+}
+
+/* OUTLINE-DARK */
+.btn-outline-dark:hover {
+    color: var(--primary-color);
+    background: rgba(37, 99, 235, 0.1);
+    border-color: rgba(37, 99, 235, 0.2);
+}
+
+/* LINK style buttons */
+.btn-link:hover {
+    color: var(--primary-color);
+}
+
+/* Outline-light (dark sections) */
+.btn-outline-light:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-color: #fff;
+    color: #fff;
+}
+
+/* Bootstrap Overrides */
+.bg-primary {
+    background-color: var(--primary-color) !important;
+}
+
+.text-primary {
+    color: var(--primary-color) !important;
+}
+
+.form-control {
+    border-radius: 0.75rem;
+    border: 1px solid var(--border-color);
+    padding: 0.75rem 1rem;
+    transition: all var(--transition-normal);
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+}
+
+.form-select {
+    border-radius: 0.75rem;
+    border: 1px solid var(--border-color);
+    padding: 0.75rem 2.25rem 0.75rem 1rem;
+}
+
+/* Card Improvements */
+.card {
+    border: none;
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+/* Ensure glass-card works when mixed with card */
+.card.glass-card {
+    background: var(--glass-bg);
+}
+
+.card-header {
+    background: transparent;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 1.25rem;
+}
+
+/* Pagination */
+.page-link {
+    color: var(--text-dark);
+    background-color: white;
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.page-link:hover {
+    color: var(--primary-color);
+    background-color: rgba(37, 99, 235, 0.1);
+}
+
+.page-item.active .page-link {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Typography - Solid Color Headings (no gradient) */
+.text-gradient {
+    color: var(--primary-color);
+    font-weight: inherit;
+}
+
+.bg-gradient-primary {
+    background: var(--primary-color);
+}
+
+/* Footer */
+footer {
+    background: white !important;
+    border-top: 1px solid var(--border-color);
+    padding: 60px 0 30px;
+}
+
+footer h5 {
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+footer a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: var(--primary-color);
+}
+
+/* Badges */
+.badge {
+    padding: 0.5em 0.8em;
+    font-weight: 500;
+    border-radius: 0.5rem;
+}
+
+/* Category Card Specifics */
+.category-card {
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.category-card:hover {
+    border-color: var(--primary-color);
+    background: rgba(239, 246, 255, 0.8);
+}
+
+/* Utility */
+.object-fit-cover {
+    object-fit: cover;
+}
+
+/* Custom Multiselect Component */
+.custom-multiselect {
+    position: relative;
+    width: 100%;
+}
+
+.multiselect-trigger {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+    cursor: pointer;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.multiselect-trigger:hover {
+    border-color: var(--primary-color);
+}
+
+.multiselect-trigger.active {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+}
+
+.multiselect-dropdown {
+    position: absolute;
+    left: 0;
+    top: 100%;
+    min-width: 100%;
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+    box-shadow: var(--shadow-lg);
+    z-index: 9999;
+    display: none;
+    margin-top: 4px;
+}
+
+.custom-multiselect.open .multiselect-dropdown {
+    display: block;
+}
+
+.multiselect-options {
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 0.5rem 0;
+}
+
+.multiselect-option {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0.75rem;
+    cursor: pointer;
+    transition: background-color 0.15s ease-in-out;
+}
+
+.multiselect-option:hover {
+    background-color: rgba(37, 99, 235, 0.05);
+}
+
+.multiselect-option input[type="checkbox"] {
+    margin-right: 0.5rem;
+}
+
+/* Card Image Gallery */
+.card-gallery-img {
+    transition: opacity 0.3s ease;
+}
+
+.card-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.card-dot:hover {
+    background: rgba(0, 0, 0, 0.5);
+    transform: scale(1.3);
+}
+
+.card-dot.active {
+    background: var(--primary-color);
+    transform: scale(1.3);
+}
