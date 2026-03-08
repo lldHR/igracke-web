@@ -1,0 +1,239 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Katalog Opreme - LLD d.o.o.{% endblock %}</title>
+    <meta name="description"
+        content="{% block meta_description %}Profesionalna oprema za dječja igrališta i street workout - LLD d.o.o.{% endblock %}">
+    <meta name="keywords"
+        content="{% block meta_keywords %}dječja igrališta, oprema za parkove, street workout, LLD Vinkovci{% endblock %}">
+
+    <!-- Open Graph tags for social sharing -->
+    <meta property="og:title" content="{% block og_title %}LLD d.o.o. - Oprema za igrališta{% endblock %}">
+    <meta property="og:description"
+        content="{% block og_description %}Vrhunska oprema za dječja igrališta, parkove i rekreaciju.{% endblock %}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:image" content="{% block og_image %}{% endblock %}">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="{% static 'catalog/style.css' %}?v=1.7" rel="stylesheet">
+
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'catalog:home' %}">
+                LLD d.o.o.
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'catalog:home' %}">
+                            <i class="fas fa-home me-1"></i> Početna
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'catalog:equipment_list' %}">
+                            <i class="fas fa-cogs me-1"></i> Katalog opreme
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'catalog:about' %}">
+                            <i class="fas fa-info-circle me-1"></i> O nama
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'catalog:contact' %}">
+                            <i class="fas fa-envelope me-1"></i> Kontakt
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main style="margin-top: 0px;">
+        {% if messages %}
+        <div class="container mt-3">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                <i
+                    class="fas fa-{% if message.tags == 'success' %}check-circle{% elif message.tags == 'error' %}exclamation-circle{% else %}info-circle{% endif %} me-2"></i>
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <h5>LLD d.o.o.</h5>
+                    <p class="mb-3">
+                        Tvrtka L.L.D. d.o.o. djeluje kao generalni zastupnik i distributer proizvođača SIMBA za područje Republike Hrvatske.
+                    </p>
+                    <!--
+                    <div class="social-links">
+                        <a href="#" class="me-3"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="me-3"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="me-3"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="me-3"><i class="fab fa-instagram"></i></a>
+                    </div>
+                    -->
+                </div>
+
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5>Katalog opreme</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="{% url 'catalog:equipment_list' %}">Katalog opreme</a></li>
+                        <li><a href="{% url 'catalog:equipment_list' %}?featured=on">Izdvojeno</a></li>
+                        <!-- <li><a href="{% url 'catalog:projects_list' %}">Projekti</a></li> -->
+                        <li><a href="{% url 'catalog:contact' %}">Zatražite ponudu</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5>Usluge</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="{% url 'catalog:contact' %}">Montaža</a></li>
+                        <li><a href="{% url 'catalog:contact' %}">Održavanje</a></li>
+                        <li><a href="{% url 'catalog:contact' %}">Savjetovanje</a></li>
+                        <li><a href="{% url 'catalog:contact' %}">Projektiranje</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5>Kontakt</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-phone me-2"></i>+385 98 909 80 10</li>
+                        <li><i class="fas fa-envelope me-2"></i>info@lld.hr</li>
+                        <li><i class="fas fa-map-marker-alt me-2"></i>Vinkovci, Croatia</li>
+                        <li><i class="fas fa-clock me-2"></i>Pon-Pet: 8:00-16:00</li>
+                    </ul>
+                </div>
+            </div>
+
+            <hr class="my-4" style="border-color: #374151;">
+
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-0">&copy; 2025 LLD d.o.o. Sva prava pridržana.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <!-- Legal links removed as per request -->
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery (required for Lightbox2) -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+        // Initialize AOS animations
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function () {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+                navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.15)';
+            } else {
+                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+                navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+            }
+        });
+
+        // Lazy loading for images
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.classList.remove('lazy');
+                        imageObserver.unobserve(img);
+                    }
+                });
+            });
+
+            document.querySelectorAll('img[data-src]').forEach(img => {
+                imageObserver.observe(img);
+            });
+        }
+    </script>
+
+    <script>
+        // Card gallery image switching
+        function switchCardImage(dotEl, index) {
+            const card = dotEl.closest('.product-card') || dotEl.closest('.glass-card');
+            if (!card) return;
+
+            const images = card.querySelectorAll('.card-gallery-img');
+            const dots = card.querySelectorAll('.card-dot');
+
+            images.forEach((img, i) => {
+                img.style.opacity = i === index ? '1' : '0';
+            });
+
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+        }
+    </script>
+
+    {% block extra_js %}{% endblock %}
+</body>
+
+</html>

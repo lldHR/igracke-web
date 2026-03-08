@@ -1,0 +1,118 @@
+{% extends 'catalog/base.html' %}
+{% load static %}
+
+{% block title %}Kontakt - LLD d.o.o.{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-5 mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <!-- Header -->
+            <div class="text-center mb-5" data-aos="fade-up">
+                <h1 class="display-4 fw-bold mb-3">Kontaktirajte nas</h1>
+                <p class="lead text-muted mx-auto" style="max-width: 800px;">
+                    Za sve informacije o proizvodima, tehničkim detaljima, ponudi i mogućnostima suradnje, slobodno nas kontaktirajte.
+                    Savjetujemo i pri planiranju dječjih igrališta, fitness zona i street workout prostora.
+                </p>
+            </div>
+
+            <!-- Contact Info (Centered) -->
+            <div class="col-lg-8 mx-auto" data-aos="fade-up">
+                <div class="glass-card mb-5">
+                    <div class="card-header bg-transparent border-bottom p-4 text-center">
+                        <h5 class="mb-0 fw-bold text-primary"><i class="fas fa-info-circle me-2"></i>Kontakt
+                            informacije</h5>
+                    </div>
+                    <div class="card-body p-5">
+                        <div class="row g-4">
+                            <div class="col-md-4 text-center">
+                                <div class="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
+                                    style="width: 80px; height: 80px;">
+                                    <i class="fas fa-map-marker-alt fa-2x text-white"></i>
+                                </div>
+                                <h5 class="fw-bold mb-2 pt-2">Adresa</h5>
+                                <p class="text-muted mb-0">Duga ulica 61<br>32100 Vinkovci, Hrvatska</p>
+                            </div>
+                            <div class="col-md-4 text-center border-start border-end border-light">
+                                <div class="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
+                                    style="width: 80px; height: 80px;">
+                                    <i class="fas fa-phone fa-2x text-white"></i>
+                                </div>
+                                <h5 class="fw-bold mb-2 pt-2">Telefon</h5>
+                                <p class="mb-0"><a href="tel:+385989098010"
+                                        class="text-decoration-none text-muted fw-bold hover-primary transition-all">+385
+                                        98 909 8010</a></p>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <div class="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
+                                    style="width: 80px; height: 80px;">
+                                    <i class="fas fa-envelope fa-2x text-white"></i>
+                                </div>
+                                <h5 class="fw-bold mb-2">Email</h5>
+                                <p class="mb-0"><a href="mailto:info@lld.hr"
+                                        class="text-decoration-none text-muted fw-bold hover-primary transition-all">info@lld.hr</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Call to Action -->
+        <div class="row justify-content-center mt-4" data-aos="fade-up">
+            <div class="col-lg-10">
+                <div class="glass-card overflow-hidden">
+
+                    <div class="card-body text-center p-5 position-relative z-1">
+                        <i class="fas fa-handshake fa-4x text-primary mb-4"></i>
+                        <h3 class="fw-bold mb-3">Spremni za suradnju?</h3>
+                        <p class="lead text-muted mb-4 mx-auto" style="max-width: 600px;">
+                            Kontaktirajte nas direktno putem telefona ili emaila za brzi odgovor na vaše upite.
+                        </p>
+
+                        {% if equipment %}
+                        <div class="alert alert-primary bg-primary bg-opacity-10 border-0 mb-4 d-inline-block px-4">
+                            <h6 class="mb-1 text-primary fw-bold">Interesirani ste za:</h6>
+                            <p class="mb-0 text-dark">{{ equipment.name }}</p>
+                        </div>
+                        <br>
+                        {% endif %}
+
+                        <div class="d-inline-flex gap-3 flex-wrap justify-content-center">
+                            <a href="tel:+385989098010" class="btn btn-primary btn-lg px-4">
+                                <i class="fas fa-phone me-2"></i> Nazovite nas
+                            </a>
+                            <a href="mailto:info@lld.hr"
+                                class="btn btn-outline-primary btn-lg px-4">
+                                <i class="fas fa-envelope me-2"></i> Pošaljite email
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Map Section -->
+        <div class="row mt-5" data-aos="fade-up">
+            <div class="col-12">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0"><i class="fas fa-map"></i> Lokacija</h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="ratio ratio-21x9">
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2805.9898551127158!2d18.807797476765877!3d45.308630543804504!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x475c8b3e1795aacd%3A0xfe3a2e2da7f76884!2sBorovska%20ul.%206%2C%2032100%2C%20Vinkovci!5e0!3m2!1shr!2shr!4v1751363707383!5m2!1shr!2shr"
+                                style="border:0;" allowfullscreen="" loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

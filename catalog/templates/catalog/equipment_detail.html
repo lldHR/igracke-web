@@ -1,0 +1,369 @@
+<!-- catalog/templates/catalog/equipment_detail.html -->
+{% extends 'catalog/base.html' %}
+
+{% block title %}{{ equipment.name }} - LLD d.o.o. - Profesionalna oprema za igrališta{% endblock %}
+
+{% block content %}
+<div class="container" style="padding-top: 120px;">
+    <div class="row justify-content-center">
+        <div class="col-lg-11" data-aos="fade-up">
+                    <!-- Tags at top -->
+                    <div class="mb-3">
+                        {% if equipment.theme_line %}
+                        <span class="badge bg-info text-white">
+                            {{ equipment.theme_line.name }}
+                        </span>
+                        {% endif %}
+                        {% if equipment.is_featured %}
+                        <span class="badge bg-warning text-dark">
+                            <i class="fas fa-star me-1"></i> Izdvojeno
+                        </span>
+                        {% endif %}
+                    </div>
+
+                    <!-- Title and Model -->
+                    <h1 class="display-5 fw-bold mb-2">{{ equipment.name }}</h1>
+                    <p class="text-muted fs-5 mb-4">Model: <span class="fw-bold text-dark">{{ equipment.model_number }}</span></p>
+
+                    <!-- Main Image (click opens lightbox) -->
+                    <div class="mb-4 bg-white rounded p-2">
+                        {% if equipment.get_main_image_public_url %}
+                        <a id="main-image-link" href="{{ equipment.get_main_image_public_url }}" data-lightbox="equipment-gallery"
+                            data-title="{{ equipment.name }}">
+                            <img id="main-image" src="{{ equipment.get_main_image_public_url }}"
+                                class="img-fluid w-100 rounded main-image" alt="{{ equipment.name }}"
+                                style="max-height: 500px; object-fit: contain; background: #ffffff; cursor: zoom-in;">
+                        </a>
+                        {% else %}
+                        <div class="bg-light d-flex align-items-center justify-content-center rounded"
+                            style="min-height: 300px;">
+                            <i class="fas fa-image fa-5x text-muted opacity-50"></i>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Hidden lightbox links for extra images (so lightbox can navigate to them) -->
+                    {% for img_url in extra_images %}
+                    <a href="{{ img_url }}" data-lightbox="equipment-gallery" data-title="{{ equipment.name }}" class="d-none"></a>
+                    {% endfor %}
+
+                    <!-- Thumbnail selectors -->
+                    {% if extra_images %}
+                    <div class="mb-4">
+                        <div class="row g-2">
+                            {% if equipment.get_main_image_public_url %}
+                            <div class="col-3 col-md-2">
+                                <img src="{{ equipment.get_main_image_public_url }}"
+                                    class="img-fluid rounded border thumbnail active-thumbnail"
+                                    alt="{{ equipment.name }}"
+                                    style="height: 80px; width: 100%; object-fit: contain; padding: 8px; background: #ffffff;"
+                                    onclick="swapMainImage(this, '{{ equipment.get_main_image_public_url }}')">
+                            </div>
+                            {% endif %}
+                            {% for img_url in extra_images %}
+                            <div class="col-3 col-md-2">
+                                <img src="{{ img_url }}"
+                                    class="img-fluid rounded border thumbnail" alt="{{ equipment.name }}"
+                                    style="height: 80px; width: 100%; object-fit: contain; padding: 8px; background: #ffffff;"
+                                    onclick="swapMainImage(this, '{{ img_url }}')">
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <!-- Description -->
+                    {% if equipment.description %}
+                    <div class="border-top border-bottom py-4 my-4">
+                        <p class="lead mb-0 text-secondary">{{ equipment.description }}</p>
+                    </div>
+                    {% endif %}
+
+                    <!-- Suitable For -->
+                    {% if equipment.suitable_for %}
+                    <div class="mb-4">
+                        <h5 class="text-primary mb-2"><i class="fas fa-check-circle me-2"></i>Namijenjeno za</h5>
+                        <p class="mb-0">{{ equipment.suitable_for }}</p>
+                    </div>
+                    {% endif %}
+
+                    <!-- Technical Specifications Table -->
+                    <div class="mb-4">
+                        <h5 class="text-primary mb-3"><i class="fas fa-cogs me-2"></i>Tehničke specifikacije</h5>
+                        <table class="table table-bordered spec-table">
+                            <tbody>
+                                {% if equipment.dimensions %}
+                                <tr>
+                                    <th><i class="fas fa-ruler-combined me-2"></i>Dimenzije</th>
+                                    <td>{{ equipment.dimensions }}</td>
+                                </tr>
+                                {% endif %}
+                                {% if equipment.safety_zone %}
+                                <tr>
+                                    <th><i class="fas fa-expand-arrows-alt me-2"></i>Sigurnosna zona</th>
+                                    <td>{{ equipment.safety_zone }}</td>
+                                </tr>
+                                {% endif %}
+                                {% if equipment.fall_height %}
+                                <tr>
+                                    <th><i class="fas fa-arrow-down me-2"></i>Visina pada</th>
+                                    <td>{{ equipment.fall_height }}</td>
+                                </tr>
+                                {% endif %}
+                                {% if equipment.max_users %}
+                                <tr>
+                                    <th><i class="fas fa-users me-2"></i>Max korisnika</th>
+                                    <td>{{ equipment.max_users }}</td>
+                                </tr>
+                                {% endif %}
+                                {% if equipment.get_age_group_display %}
+                                <tr>
+                                    <th><i class="fas fa-child me-2"></i>Dobna skupina</th>
+                                    <td>{{ equipment.get_age_group_display }}</td>
+                                </tr>
+                                {% endif %}
+                                {% if equipment.material %}
+                                <tr>
+                                    <th><i class="fas fa-cube me-2"></i>Materijal</th>
+                                    <td>{{ equipment.material }}</td>
+                                </tr>
+                                {% endif %}
+                                {% if equipment.get_safety_standard_display %}
+                                <tr>
+                                    <th><i class="fas fa-shield-alt me-2"></i>Sigurnosni standard</th>
+                                    <td>{{ equipment.get_safety_standard_display }}</td>
+                                </tr>
+                                {% endif %}
+                                {% if equipment.installation_time %}
+                                <tr>
+                                    <th><i class="fas fa-tools me-2"></i>Vrijeme montaže</th>
+                                    <td>{{ equipment.installation_time }}</td>
+                                </tr>
+                                {% endif %}
+                                {% if equipment.get_maintenance_level_display %}
+                                <tr>
+                                    <th><i class="fas fa-wrench me-2"></i>Održavanje</th>
+                                    <td>{{ equipment.get_maintenance_level_display }}</td>
+                                </tr>
+                                {% endif %}
+                                {% if equipment.warranty_years %}
+                                <tr>
+                                    <th><i class="fas fa-certificate me-2"></i>Jamstvo</th>
+                                    <td>{{ equipment.warranty_years }} godina</td>
+                                </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Installation Requirements -->
+                    {% if equipment.foundation_required is not None %}
+                    <div class="mb-4">
+                        <h5 class="text-primary mb-3"><i class="fas fa-hard-hat me-2"></i>Zahtjevi za montažu</h5>
+                        <div class="alert alert-info mb-0">
+                            <p class="mb-2">
+                                {% if equipment.foundation_required %}
+                                <i class="fas fa-check text-success me-2"></i>Potreban betonski temelj
+                                {% else %}
+                                <i class="fas fa-times text-danger me-2"></i>Nije potreban poseban temelj
+                                {% endif %}
+                            </p>
+                            <p class="mb-0 small"><strong>Profesionalna montaža:</strong> Naši certificirani tehničari
+                                osiguravaju pravilnu montažu prema sigurnosnim standardima.</p>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <!-- Variants Accordion -->
+                    {% if equipment.has_variant and variants %}
+                    <div class="mb-4">
+                        <h5 class="text-primary mb-3"><i class="fas fa-layer-group me-2"></i>Varijacije proizvoda</h5>
+                        <div class="accordion" id="variantAccordion">
+                            {% for var in variants %}
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading{{ forloop.counter }}">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapse{{ forloop.counter }}">
+                                        {{ var.variant_name|default:"Varijanta" }}
+                                    </button>
+                                </h2>
+                                <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse"
+                                    data-bs-parent="#variantAccordion">
+                                    <div class="accordion-body">
+                                        <ul class="list-unstyled mb-0">
+                                            {% if var.dimensions %}<li><strong>Dimenzije:</strong> {{ var.dimensions }}
+                                            </li>{% endif %}
+                                            {% if var.safety_zone %}<li><strong>Sigurnosna zona:</strong> {{ var.safety_zone }}</li>{% endif %}
+                                            {% if var.materials %}<li><strong>Materijal:</strong> {{ var.materials }}
+                                            </li>{% endif %}
+                                            {% if var.max_users %}<li><strong>Max korisnika:</strong> {{ var.max_users }}</li>{% endif %}
+                                            {% if var.theme_line %}<li><strong>Tematska linija:</strong> {{ var.theme_line.name }}</li>{% endif %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <!-- DWG Files -->
+                    {% if equipment.get_dwg_files_public_urls %}
+                    <div class="mb-4">
+                        <h5 class="text-primary mb-3"><i class="fas fa-file-download me-2"></i>DWG datoteke</h5>
+                        <div class="d-flex flex-wrap gap-2">
+                            {% for dwg_url in equipment.get_dwg_files_public_urls %}
+                            <a href="{{ dwg_url }}" class="btn btn-outline-primary" download>
+                                <i class="fas fa-download me-1"></i>
+                                {% if forloop.first %}DWG - glavni{% else %}DWG - varijanta {{ forloop.counter0 }}{% endif %}
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <!-- Technical Sheet Button -->
+                    {% if equipment.technical_sheet %}
+                    <div class="mt-4">
+                        <a href="{{ equipment.technical_sheet.url }}" class="btn btn-outline-dark btn-lg px-5"
+                            target="_blank">
+                            <i class="fas fa-file-pdf me-2"></i>Tehnički list
+                        </a>
+                    </div>
+                    {% endif %}
+        </div>
+    </div>
+
+    <!-- Related Equipment -->
+    {% if related_equipment %}
+    <div class="container mt-5">
+        <h3 class="text-center mb-4" data-aos="fade-up"><i class="fas fa-puzzle-piece me-2"></i>Slična oprema</h3>
+        <div class="row g-4 justify-content-center">
+            {% for related in related_equipment %}
+            <div class="col-md-4 col-lg-3" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:1 }}00">
+                <div class="glass-card h-100 product-card position-relative">
+                    <!-- Slika -->
+                    <div class="position-relative overflow-hidden bg-white d-flex align-items-center justify-content-center"
+                        style="height: 220px;">
+                        <a href="{% url 'catalog:equipment_detail' related.pk %}" class="d-flex w-100 h-100 align-items-center justify-content-center text-decoration-none">
+                            {% if related.get_main_image_public_url %}
+                            <img src="{{ related.get_main_image_public_url }}" alt="{{ related.name }}"
+                                style="width: 70%; height: 70%; object-fit: contain;" loading="lazy">
+                            {% else %}
+                            <div class="w-100 h-100 d-flex align-items-center justify-content-center bg-light text-muted">
+                                <i class="fas fa-image fa-3x opacity-50"></i>
+                            </div>
+                            {% endif %}
+                        </a>
+
+                        <!-- Overlay -->
+                        <div class="product-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center opacity-0 hover-opacity-100 transition-opacity duration-300 bg-dark bg-opacity-25 backdrop-blur-sm pe-none">
+                            <a href="{% url 'catalog:equipment_detail' related.pk %}"
+                                class="btn btn-primary rounded-circle p-3 pe-auto">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="card-body p-4 d-flex flex-column">
+                        <h6 class="card-title fw-bold mb-2 text-dark">
+                            <a href="{% url 'catalog:equipment_detail' related.pk %}" class="text-decoration-none text-dark">
+                                {{ related.name }}
+                            </a>
+                        </h6>
+
+                        <div class="d-flex align-items-center justify-content-between mt-auto pt-3 border-top border-light">
+                            <div class="d-flex align-items-center text-muted small">
+                                <i class="fas fa-ruler-combined me-2 text-primary opacity-50"></i>
+                                {{ related.dimensions|default:"N/A" }}
+                            </div>
+                            <a href="{% url 'catalog:equipment_detail' related.pk %}"
+                                class="btn btn-link text-primary p-0 fw-bold text-decoration-none">
+                                Detalji <i class="fas fa-arrow-right ms-1 small"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Spacer before footer -->
+<div class="mb-5"></div>
+{% endblock %}
+
+{% block extra_css %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" rel="stylesheet">
+<style>
+    .spec-table th {
+        width: 40%;
+        background: rgba(37, 99, 235, 0.05);
+    }
+
+    .spec-table td {
+        font-weight: 500;
+    }
+
+    .thumbnail {
+        cursor: pointer;
+        transition: all 0.3s ease;
+        opacity: 0.7;
+    }
+
+    .thumbnail:hover,
+    .active-thumbnail {
+        opacity: 1;
+        border-color: var(--primary-color) !important;
+    }
+
+    /* Move Lightbox caption above image */
+    .lb-outerContainer {
+        order: 2;
+    }
+
+    .lb-dataContainer {
+        order: 1;
+        padding-top: 10px;
+        padding-bottom: 15px;
+    }
+
+    .lightbox .lb-image {
+        border-radius: 8px;
+    }
+
+    #lightbox {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .lb-container {
+        display: flex;
+        flex-direction: column;
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
+<script>
+    lightbox.option({
+        'resizeDuration': 200,
+        'wrapAround': true,
+        'albumLabel': 'Slika %1 od %2',
+        'positionFromTop': 50
+    });
+
+    function swapMainImage(thumbEl, imageUrl) {
+        // Update main image
+        document.getElementById('main-image').src = imageUrl;
+        document.getElementById('main-image-link').href = imageUrl;
+
+        // Toggle active thumbnail
+        document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active-thumbnail'));
+        thumbEl.classList.add('active-thumbnail');
+    }
+</script>
+{% endblock %}

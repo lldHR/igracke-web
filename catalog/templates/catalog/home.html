@@ -1,0 +1,397 @@
+{% extends 'catalog/base.html' %}
+
+{% block title %}LLD d.o.o. - Profesionalna oprema za dječja igrališta i Street Workout{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 text-center text-lg-start" data-aos="fade-right">
+                <h1 class="display-4 fw-bold mb-4">
+                    Profesionalna oprema za dječja igrališta i Street Workout
+                </h1>
+                <p class="lead mb-4">
+                    Simba oprema za dječja igrališta, vanjske fitness zone i street workout prostore, namijenjena
+                    vrtićima, školama, turističkim kompleksima, javnim površinama i privatnim investitorima.
+                </p>
+                <div class="d-flex flex-column flex-sm-row flex-wrap gap-3 justify-content-center justify-content-lg-start">
+                    <a href="{% url 'catalog:equipment_list' %}" class="btn btn-light btn-lg">
+                        <i class="fas fa-cogs me-2"></i>Pregledajte Opremu
+                    </a>
+                    <a href="{% url 'catalog:contact' %}" class="btn btn-outline-light btn-lg">
+                        <i class="fas fa-envelope me-2"></i>Zatražite Ponudu
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6 d-none d-lg-block" data-aos="fade-left">
+                <div class="text-center">
+                    <i class="fas fa-dumbbell fa-8x mb-4 opacity-25"></i>
+                    <div class="row g-3">
+                        <div class="col-6">
+                            <div class="bg-white bg-opacity-10 rounded p-3">
+                                <i class="fas fa-child fa-2x mb-2"></i>
+                                <h5>Dječja Igrališta</h5>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="bg-white bg-opacity-10 rounded p-3">
+                                <i class="fas fa-dumbbell fa-2x mb-2"></i>
+                                <h5>Street Workout</h5>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="bg-white bg-opacity-10 rounded p-3">
+                                <i class="fas fa-school fa-2x mb-2"></i>
+                                <h5>Školska Oprema</h5>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="bg-white bg-opacity-10 rounded p-3">
+                                <i class="fas fa-seedling fa-2x mb-2"></i>
+                                <h5>Javne Površine</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="glass-card p-4 text-center h-100 d-flex flex-column justify-content-center">
+                    <div class="number display-4 fw-bold text-primary mb-2"># 1</div>
+                    <div class="label text-muted fw-bold">Vaš partner za rekreaciju</div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="glass-card p-4 text-center h-100 d-flex flex-column justify-content-center">
+                    <div class="number display-4 fw-bold text-primary mb-2">{{ stats.total_equipment|default:"200" }}+
+                    </div>
+                    <div class="label text-muted fw-bold">Modela Opreme</div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                <div class="glass-card p-4 text-center h-100 d-flex flex-column justify-content-center">
+                    <div class="number display-4 fw-bold text-primary mb-2">1000+</div>
+                    <div class="label text-muted fw-bold">Zadovoljnih Korisnika</div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
+                <div class="glass-card p-4 text-center h-100 d-flex flex-column justify-content-center">
+                    <div class="number display-4 fw-bold text-success mb-2">100%</div>
+                    <div class="label text-muted fw-bold">Sigurnosno Certificirano</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Equipment Section -->
+{% if featured_equipment %}
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center mb-5" data-aos="fade-up">
+                <h2 class="display-5 fw-bold mb-3">
+                    <span class="text-gradient">Izdvojena Oprema</span>
+                </h2>
+                <p class="lead text-muted">
+                    Otkrijte našu najpopularniju i inovativnu opremu za igrališta i fitness.
+                </p>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            {% for equipment in featured_equipment %}
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter|add:0|add:100 }}">
+                <div class="glass-card h-100 product-card position-relative">
+                    <!-- Badges -->
+                    <div class="position-absolute top-0 start-0 p-3 z-1">
+                        {% if equipment.is_featured %}
+                        <span class="badge bg-warning text-dark mb-1 d-block">
+                            <i class="fas fa-star me-1"></i>Izdvojeno
+                        </span>
+                        {% endif %}
+                        {% if equipment.is_new %}
+                        <span class="badge bg-success text-white d-block">
+                            <i class="fas fa-bolt me-1"></i>Novo
+                        </span>
+                        {% endif %}
+                    </div>
+
+                    <!-- Slika -->
+                    <div class="position-relative overflow-hidden bg-white d-flex align-items-center justify-content-center"
+                        style="height: 280px;">
+                        <a href="{% url 'catalog:equipment_detail' equipment.pk %}" class="d-flex w-100 h-100 align-items-center justify-content-center text-decoration-none">
+                            {% with all_images=equipment.get_gallery_images_public_urls %}
+                            {% for img_url in all_images %}
+                            <img src="{{ img_url }}" alt="{{ equipment.name }}" class="card-gallery-img"
+                                style="width: 70%; height: 70%; object-fit: contain; position: absolute;{% if not forloop.first %} opacity: 0;{% endif %}" loading="lazy">
+                            {% empty %}
+                            <div class="w-100 h-100 d-flex align-items-center justify-content-center bg-light text-muted">
+                                <i class="fas fa-image fa-3x opacity-50"></i>
+                            </div>
+                            {% endfor %}
+                            {% endwith %}
+                        </a>
+
+                        <!-- Dot indicators -->
+                        {% with all_images=equipment.get_gallery_images_public_urls %}
+                        {% if all_images|length > 1 %}
+                        <div class="position-absolute bottom-0 start-50 translate-middle-x mb-2 d-flex gap-1 z-1" style="pointer-events: auto;">
+                            {% for img_url in all_images %}
+                            <span class="card-dot{% if forloop.first %} active{% endif %}" onclick="event.preventDefault(); event.stopPropagation(); switchCardImage(this, {{ forloop.counter0 }})"></span>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                        {% endwith %}
+
+                        <!-- Overlay -->
+                        <div
+                            class="product-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center opacity-0 hover-opacity-100 transition-opacity duration-300 bg-dark bg-opacity-25 backdrop-blur-sm pe-none">
+                            <a href="{% url 'catalog:equipment_detail' equipment.pk %}"
+                                class="btn btn-primary rounded-circle p-3 pe-auto">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="card-body p-4 d-flex flex-column">
+                        <div class="mb-2 flex-grow-1">
+                            {% if equipment.theme_line %}
+                            <span class="badge bg-info text-white small">
+                                {{ equipment.theme_line.name }}
+                            </span>
+                            {% endif %}
+                        </div>
+                        <h5 class="card-title fw-bold mb-2 text-dark">
+                            <a href="{% url 'catalog:equipment_detail' equipment.pk %}" class="text-decoration-none text-dark">
+                                {{ equipment.name }}
+                            </a>
+                        </h5>
+                        {% if equipment.description %}
+                        <p class="text-muted small mb-3">{{ equipment.description|truncatewords:15 }}</p>
+                        {% endif %}
+
+                        <div class="d-flex align-items-center justify-content-between mt-auto pt-3 border-top border-light">
+                            <div class="d-flex align-items-center text-muted small">
+                                <i class="fas fa-ruler-combined me-2 text-primary opacity-50"></i>
+                                {{ equipment.dimensions|default:"N/A" }}
+                            </div>
+                            <a href="{% url 'catalog:equipment_detail' equipment.pk %}"
+                                class="btn btn-link text-primary p-0 fw-bold text-decoration-none">
+                                Detalji <i class="fas fa-arrow-right ms-1 small"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="text-center mt-5" data-aos="fade-up">
+            <a href="{% url 'catalog:equipment_list' %}" class="btn btn-primary btn-lg">
+                <i class="fas fa-th-large me-2"></i>Pogledaj Svu Opremu
+            </a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Categories Section -->
+{% if categories %}
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center mb-5" data-aos="fade-up">
+                <h2 class="display-5 fw-bold mb-3">
+                    <span class="text-gradient">Kategorije Opreme</span>
+                </h2>
+                <p class="lead text-muted">
+                    Istražite naš raznolik asortiman opreme dizajniran za različite potrebe i okruženja.
+                </p>
+            </div>
+        </div>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-4 justify-content-center">
+            {% for category in categories %}
+            <div class="col">
+                <a href="{% url 'catalog:equipment_list' %}?category={{ category.pk }}"
+                    class="text-decoration-none d-block h-100">
+                    <div class="glass-card h-100 text-center border-0 p-4 category-card">
+                        <div class="d-flex flex-column align-items-center justify-content-center h-100">
+                            <h5 class="card-title fw-bold mb-2 text-dark">{{ category.name }}</h5>
+                            <p class="text-muted small mb-3">{{ category.description|truncatewords:10 }}</p>
+                            <span class="badge bg-primary text-white mb-0 mt-auto">{{ category.active_equipment_count|default:"0" }} proizvoda</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Featured Projects Section -->
+{% if featured_projects %}
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center mb-5" data-aos="fade-up">
+                <h2 class="display-5 fw-bold mb-3">
+                    <span class="text-gradient">Izdvojeni Projekti</span>
+                </h2>
+                <p class="lead text-muted">
+                    Pogledajte kako smo transformirali zajednice našim profesionalnim instalacijama opreme.
+                </p>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            {% for project in featured_projects %}
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter|add:0|add:100 }}">
+                <div class="glass-card h-100 d-flex flex-column">
+                    <div class="card-body p-4">
+                        <h5 class="card-title fw-bold mb-2">{{ project.title }}</h5>
+                        <p class="text-muted small mb-3">
+                            <i class="fas fa-map-marker-alt text-primary me-1"></i> {{ project.location }}
+                        </p>
+                        <p class="card-text text-muted mb-4">{{ project.description|truncatewords:20 }}</p>
+
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="badge bg-primary text-white">{{ project.get_project_type_display }}</span>
+                            {% if project.completion_date %}
+                            <small class="text-muted">{{ project.completion_date|date:"M Y" }}</small>
+                            {% endif %}
+                        </div>
+
+                        {% if project.equipment_used.all %}
+                        <div class="mb-3">
+                            <small class="text-muted d-block mb-2">Korištena oprema:</small>
+                            <div class="d-flex flex-wrap gap-1">
+                                {% for equipment in project.equipment_used.all|slice:":3" %}
+                                <span class="badge bg-light text-dark border">{{ equipment.name }}</span>
+                                {% endfor %}
+                                {% if project.equipment_used.count > 3 %}
+                                <span class="badge bg-light text-dark border">+{{ project.equipment_used.count|add:"-3" }}
+                                    više</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="card-footer bg-transparent border-top p-4 pt-0 mt-auto">
+                        <a href="{% url 'catalog:project_detail' project.pk %}"
+                            class="btn btn-outline-primary w-100">
+                            <i class="fas fa-eye me-2"></i> Pogledaj Projekt
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="text-center mt-5" data-aos="fade-up">
+            <a href="{% url 'catalog:projects_list' %}" class="btn btn-primary btn-lg">
+                <i class="fas fa-project-diagram me-2"></i>Pogledaj Sve Projekte
+            </a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Why Choose Us Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="mx-auto text-center mb-5" data-aos="fade-up">
+                <h2 class="display-5 fw-bold mb-3">
+                    <span class="text-gradient">Zašto baš LLD d.o.o.?</span>
+                </h2>
+                <p class="lead text-muted">
+                    Naša misija je omogućiti kvalitetna, dugotrajna i funkcionalna rješenja za igrališta i rekreacijske
+                    zone.
+                </p>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="text-center">
+                    <div class="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <i class="fas fa-shield-alt fa-2x text-white"></i>
+                    </div>
+                    <h5 class="pt-2">Certificirana Sigurnost</h5>
+                    <p class="text-muted small">SIMBA je jedan od vodećih europskih proizvođača certificiranih
+                        igrališnih sprava prema EN 1176 standardima sigurnosti.</p>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="text-center">
+                    <div class="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <i class="fas fa-tools fa-2x text-white"></i>
+                    </div>
+                    <h5 class="pt-2">Stručna Montaža</h5>
+                    <p class="text-muted small">Nudimo sveobuhvatnu uslugu: prodaju, distribuciju i montažu SIMBA
+                        opreme, uz stručno savjetovanje.</p>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                <div class="text-center">
+                    <div class="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <i class="fas fa-medal fa-2x text-white"></i>
+                    </div>
+                    <h5 class="pt-2">Vrhunska Kvaliteta</h5>
+                    <p class="text-muted small">Svi čelični dijelovi sprava praškasto su pocinčani i završno
+                        plastificirani za dugotrajnu otpornost na koroziju i UV zračenje.</p>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
+                <div class="text-center">
+                    <div class="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <i class="fas fa-headset fa-2x text-white"></i>
+                    </div>
+                    <h5 class="pt-2">Podrška i Održavanje</h5>
+                    <p class="text-muted small">Osiguravamo dugoročnu dostupnost rezervnih dijelova i postprodajnu
+                        podršku za sve naše projekte.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action Section -->
+<section class="py-5 bg-gradient-primary text-white">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-7" data-aos="fade-right">
+                <h2 class="display-6 fw-bold mb-3">Spremni za transformaciju vašeg prostora?</h2>
+                <p class="lead mb-4">
+                    Javite nam se kako bismo razgovarali o vašim potrebama za igralištima ili fitness opremom.
+                    Pomoći ćemo vam odabrati idealna rješenja za vaš prostor.
+                </p>
+            </div>
+            <div class="col-lg-5 text-center text-lg-end" data-aos="fade-left">
+                <div class="d-flex justify-content-center justify-content-lg-end gap-3 flex-wrap">
+                    <a href="{% url 'catalog:contact' %}" class="btn btn-light btn-lg text-nowrap">
+                        <i class="fas fa-envelope me-2"></i>Zatražite Ponudu
+                    </a>
+                    <a href="tel:+385989098010" class="btn btn-outline-light btn-lg text-nowrap">
+                        <i class="fas fa-phone me-2"></i>Nazovite Nas
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

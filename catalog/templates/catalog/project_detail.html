@@ -1,0 +1,407 @@
+{% extends 'catalog/base.html' %}
+
+{% block title %}{{ project.title }} - LLD d.o.o.{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8" data-aos="fade-right">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'catalog:home' %}" class="text-white">Početna</a>
+                        </li>
+                        <li class="breadcrumb-item"><a href="{% url 'catalog:projects_list' %}"
+                                class="text-white">Projekti</a></li>
+                        <li class="breadcrumb-item active text-white" aria-current="page">{{ project.title }}</li>
+                    </ol>
+                </nav>
+                <h1 class="display-4 fw-bold mb-4">{{ project.title }}</h1>
+                <p class="lead mb-4">{{ project.description|truncatewords:30 }}</p>
+                <div class="d-flex flex-wrap gap-3 mb-4">
+                    <span class="badge bg-light text-dark">
+                        <i class="fas fa-map-marker-alt me-1"></i>{{ project.location }}
+                    </span>
+                    <span class="badge bg-light text-dark">
+                        <i class="fas fa-tag me-1"></i>{{ project.get_project_type_display }}
+                    </span>
+                    {% if project.is_featured %}
+                    <span class="badge bg-warning">
+                        <i class="fas fa-star me-1"></i>Izdvojeni projekt
+                    </span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-lg-4 text-center" data-aos="fade-left">
+                <div class="bg-white bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
+                    style="width: 120px; height: 120px;">
+                    <i class="fas fa-project-diagram fa-4x text-white"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Project Details Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <!-- Main Content -->
+            <div class="col-lg-8">
+                <!-- Project Image -->
+                <div class="glass-card mb-4 overflow-hidden" data-aos="fade-up">
+                    <div class="bg-light d-flex align-items-center justify-content-center position-relative"
+                        style="height: 400px;">
+                        <i class="fas fa-project-diagram fa-5x text-muted opacity-25"></i>
+                        <div class="position-absolute bottom-0 start-0 w-100 p-4 bg-gradient-to-t from-black-50">
+                            <h3 class="text-white mb-0 shadow-text">{{ project.title }}</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Description -->
+                <div class="glass-card mb-4" data-aos="fade-up">
+                    <div class="card-header bg-transparent border-bottom p-4">
+                        <h4 class="mb-0 fw-bold"><i class="fas fa-info-circle me-2 text-primary"></i>Pregled projekta
+                        </h4>
+                    </div>
+                    <div class="card-body p-4">
+                        <p class="lead text-muted">{{ project.description }}</p>
+
+                        {% if project.equipment_used.all %}
+                        <h5 class="mt-5 mb-4 fw-bold">Korištena oprema</h5>
+                        <div class="row g-3">
+                            {% for equipment in project.equipment_used.all %}
+                            <div class="col-md-6">
+                                <div
+                                    class="glass-card h-100 border-0 bg-white bg-opacity-40 hover-shadow transition-all">
+                                    <div class="card-body p-3">
+                                        <div class="d-flex align-items-center mb-2">
+                                            <div class="bg-primary bg-opacity-10 rounded p-2 me-3">
+                                                <i class="fas fa-cube text-primary"></i>
+                                            </div>
+                                            <div>
+                                                <h6 class="card-title mb-0 fw-bold">{{ equipment.name }}</h6>
+                                                <small class="text-muted">{{ equipment.model_number }}</small>
+                                            </div>
+                                        </div>
+
+                                        <div
+                                            class="d-flex justify-content-between align-items-center mt-3 pt-2 border-top border-light">
+                                            <span class="badge bg-primary text-white">{{ equipment.get_age_group_display }}</span>
+                                            <a href="{% url 'catalog:equipment_detail' equipment.pk %}"
+                                                class="btn btn-link btn-sm text-decoration-none p-0">
+                                                Pogledaj <i class="fas fa-chevron-right small ms-1"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Technical Specifications -->
+                <div class="glass-card mb-4" data-aos="fade-up">
+                    <div class="card-header bg-transparent border-bottom p-4">
+                        <h4 class="mb-0 fw-bold"><i class="fas fa-cogs me-2 text-primary"></i>Detalji projekta</h4>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <ul class="list-group list-group-flush bg-transparent">
+                                    <li
+                                        class="list-group-item bg-transparent d-flex justify-content-between align-items-center px-0">
+                                        <span class="text-muted"><i
+                                                class="fas fa-map-marker-alt text-primary me-2 w-25px"></i>
+                                            Lokacija</span>
+                                        <span class="fw-medium">{{ project.location }}</span>
+                                    </li>
+                                    <li
+                                        class="list-group-item bg-transparent d-flex justify-content-between align-items-center px-0">
+                                        <span class="text-muted"><i class="fas fa-tag text-primary me-2 w-25px"></i> Tip
+                                            projekta</span>
+                                        <span class="fw-medium">{{ project.get_project_type_display }}</span>
+                                    </li>
+                                    {% if project.client %}
+                                    <li
+                                        class="list-group-item bg-transparent d-flex justify-content-between align-items-center px-0">
+                                        <span class="text-muted"><i
+                                                class="fas fa-building text-primary me-2 w-25px"></i> Klijent</span>
+                                        <span class="fw-medium">{{ project.client }}</span>
+                                    </li>
+                                    {% endif %}
+                                    {% if project.completion_date %}
+                                    <li
+                                        class="list-group-item bg-transparent d-flex justify-content-between align-items-center px-0">
+                                        <span class="text-muted"><i
+                                                class="fas fa-calendar-check text-primary me-2 w-25px"></i> Datum
+                                            završetka</span>
+                                        <span class="fw-medium">{{ project.completion_date|date:"F Y" }}</span>
+                                    </li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <ul class="list-group list-group-flush bg-transparent">
+                                    {% if project.project_duration %}
+                                    <li
+                                        class="list-group-item bg-transparent d-flex justify-content-between align-items-center px-0">
+                                        <span class="text-muted"><i class="fas fa-clock text-primary me-2 w-25px"></i>
+                                            Trajanje</span>
+                                        <span class="fw-medium">{{ project.project_duration }}</span>
+                                    </li>
+                                    {% endif %}
+                                    {% if project.budget_range %}
+                                    <li
+                                        class="list-group-item bg-transparent d-flex justify-content-between align-items-center px-0">
+                                        <span class="text-muted"><i
+                                                class="fas fa-euro-sign text-primary me-2 w-25px"></i> Budžet</span>
+                                        <span class="fw-medium">{{ project.budget_range }}</span>
+                                    </li>
+                                    {% endif %}
+                                    <li
+                                        class="list-group-item bg-transparent d-flex justify-content-between align-items-center px-0">
+                                        <span class="text-muted"><i class="fas fa-cube text-primary me-2 w-25px"></i>
+                                            Broj elemenata</span>
+                                        <span class="fw-medium">{{ project.equipment_used.count }} kom</span>
+                                    </li>
+                                    <li
+                                        class="list-group-item bg-transparent d-flex justify-content-between align-items-center px-0">
+                                        <span class="text-muted"><i class="fas fa-star text-primary me-2 w-25px"></i>
+                                            Status</span>
+                                        {% if project.is_featured %}
+                                        <span class="badge bg-success">Izdvojeno</span>
+                                        {% else %}
+                                        <span class="badge bg-secondary">Završeno</span>
+                                        {% endif %}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <!-- Quick Contact -->
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0"><i class="fas fa-envelope me-2"></i>Zanima vas sličan projekt?</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="small text-muted mb-3">
+                            Kontaktirajte nas kako bismo razgovarali o tome kako možemo pomoći u stvaranju sličnog
+                            projekta za vašu zajednicu.
+                        </p>
+                        <div class="d-grid gap-2">
+                            <a href="{% url 'catalog:contact' %}" class="btn btn-primary">
+                                <i class="fas fa-envelope me-2"></i>Zatražite ponudu
+                            </a>
+                            <a href="tel:+385989098010" class="btn btn-outline-primary">
+                                <i class="fas fa-phone me-2"></i>Nazovite odmah
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Stats -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-chart-bar me-2"></i>Istaknuto</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row text-center">
+                            <div class="col-6 mb-3">
+                                <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-2"
+                                    style="width: 50px; height: 50px;">
+                                    <i class="fas fa-cube text-primary"></i>
+                                </div>
+                                <h6 class="mb-1">{{ project.equipment_used.count }}</h6>
+                                <small class="text-muted">Elemenata opreme</small>
+                            </div>
+                            <div class="col-6 mb-3">
+                                <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-2"
+                                    style="width: 50px; height: 50px;">
+                                    <i class="fas fa-users text-primary"></i>
+                                </div>
+                                <h6 class="mb-1">100+</h6>
+                                <small class="text-muted">Dnevnih korisnika</small>
+                            </div>
+                            <div class="col-6">
+                                <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-2"
+                                    style="width: 50px; height: 50px;">
+                                    <i class="fas fa-shield-alt text-primary"></i>
+                                </div>
+                                <h6 class="mb-1">100%</h6>
+                                <small class="text-muted">Sigurnosni certifikat</small>
+                            </div>
+                            <div class="col-6">
+                                <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-2"
+                                    style="width: 50px; height: 50px;">
+                                    <i class="fas fa-thumbs-up text-primary"></i>
+                                </div>
+                                <h6 class="mb-1">5.0</h6>
+                                <small class="text-muted">Ocjena klijenta</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Related Projects -->
+                {% if related_projects %}
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-project-diagram me-2"></i>Povezani projekti</h5>
+                    </div>
+                    <div class="card-body">
+                        {% for related in related_projects %}
+                        <div class="border-bottom pb-3 mb-3">
+                            <h6><a href="{% url 'catalog:project_detail' related.pk %}" class="text-decoration-none">{{
+                                    related.title }}</a></h6>
+                            <p class="small text-muted mb-1">
+                                <i class="fas fa-map-marker-alt me-1"></i>{{ related.location }}
+                            </p>
+                            <p class="small">{{ related.description|truncatewords:10 }}</p>
+                            <span class="badge bg-primary">{{ related.get_project_type_display }}</span>
+                        </div>
+                        {% endfor %}
+                        <a href="{% url 'catalog:projects_list' %}" class="btn btn-outline-primary btn-sm">
+                            <i class="fas fa-th"></i> Pogledaj sve projekte
+                        </a>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Project Benefits Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center mb-5" data-aos="fade-up">
+                <h2 class="display-5 fw-bold mb-3">
+                    <span class="text-gradient">Prednosti projekta</span>
+                </h2>
+                <p class="lead text-muted">
+                    Ovaj projekt donio je značajnu vrijednost zajednici
+                </p>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
+                            style="width: 80px; height: 80px;">
+                            <i class="fas fa-child fa-2x text-primary"></i>
+                        </div>
+                        <h5>Angažman zajednice</h5>
+                        <p class="text-muted small">Povećano sudjelovanje zajednice i socijalna interakcija među
+                            stanovnicima.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
+                            style="width: 80px; height: 80px;">
+                            <i class="fas fa-heart fa-2x text-primary"></i>
+                        </div>
+                        <h5>Zdravlje i dobrobit</h5>
+                        <p class="text-muted small">Promiče fizičku aktivnost i zdrav način života za sve dobne skupine.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
+                            style="width: 80px; height: 80px;">
+                            <i class="fas fa-shield-alt fa-2x text-primary"></i>
+                        </div>
+                        <h5>Sigurnost</h5>
+                        <p class="text-muted small">Sigurna, izdržljiva oprema koja zadovoljava sve međunarodne
+                            sigurnosne standarde.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
+                            style="width: 80px; height: 80px;">
+                            <i class="fas fa-leaf fa-2x text-primary"></i>
+                        </div>
+                        <h5>Ekološki utjecaj</h5>
+                        <p class="text-muted small">Održivi dizajn i materijali koji poštuju prirodni okoliš.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonial Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center" data-aos="fade-up">
+                <div class="card bg-gradient-primary text-white">
+                    <div class="card-body p-5">
+                        <i class="fas fa-quote-left fa-3x mb-4" style="opacity: 0.3;"></i>
+                        <blockquote class="blockquote">
+                            <p class="lead mb-4">
+                                "LLD d.o.o. je isporučio izniman projekt koji je nadmašio naša očekivanja.
+                                Kvaliteta opreme i profesionalna usluga montaže bili su izvrsni.
+                                Naša zajednica obožava novo igralište!"
+                            </p>
+                            <footer class="blockquote-footer text-white">
+                                <cite title="Source Title">
+                                    {% if project.client %}{{ project.client }}{% else %}Predstavnik zajednice{% endif
+                                    %}
+                                </cite>
+                            </footer>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8" data-aos="fade-right">
+                <h2 class="display-6 fw-bold mb-3">Spremni za stvaranje vlastitog projekta?</h2>
+                <p class="lead mb-4">
+                    Neka vam pomognemo transformirati vaš prostor profesionalnom opremom za igrališta i fitness.
+                    Kontaktirajte nas danas za besplatne konzultacije.
+                </p>
+            </div>
+            <div class="col-lg-4 text-lg-end" data-aos="fade-left">
+                <a href="{% url 'catalog:contact' %}" class="btn btn-primary btn-lg">
+                    <i class="fas fa-envelope me-2"></i>Zatražite ponudu
+                </a>
+                <a href="{% url 'catalog:projects_list' %}" class="btn btn-outline-primary btn-lg">
+                    <i class="fas fa-project-diagram me-2"></i>Pogledaj projekte
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
